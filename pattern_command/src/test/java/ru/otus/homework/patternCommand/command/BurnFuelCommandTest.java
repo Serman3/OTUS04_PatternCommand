@@ -2,24 +2,28 @@ package ru.otus.homework.patternCommand.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.otus.homework.patternCommand.model.FuelTank;
+import ru.otus.homework.patternCommand.model.BurnFuelingObject;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class BurnFuelCommandTest extends BaseTest {
 
-    private FuelTank fuelTank;
+    private BurnFuelingObject burnFuelingObject;
     private Command burnFuelCommand;
 
     @BeforeEach
     public void setUp() {
-        fuelTank = new FuelTank(10.0, 3.0);
-        burnFuelCommand = new BurnFuelCommand(fuelTank);
+        burnFuelingObject = mock(BurnFuelingObject.class);
     }
 
     @Test
     public void reduceAmountFuelTest() {
+        when(burnFuelingObject.getFuelAmount()).thenReturn(10.0);
+        when(burnFuelingObject.getFuelConsumptionRate()).thenReturn(3.0);
+        doNothing().when(burnFuelingObject).setFuelAmount(anyDouble());
+
+        burnFuelCommand = new BurnFuelCommand(burnFuelingObject);
         burnFuelCommand.execute();
-        assertEquals(7.0, fuelTank.getFuelAmount());
+        verify(burnFuelingObject).setFuelAmount(eq(7.0));
     }
 }

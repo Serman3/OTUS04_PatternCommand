@@ -1,17 +1,17 @@
 package ru.otus.homework.patternCommand.command;
 
-import ru.otus.homework.patternCommand.model.FuelTank;
+import ru.otus.homework.patternCommand.model.BurnFuelingObject;
 
 public class BurnFuelCommand implements Command {
 
-    private final FuelTank fuelTank;
+    private final BurnFuelingObject burnFuelingObject;
 
-    public BurnFuelCommand(FuelTank fuelTank) {
-        this.fuelTank = fuelTank;
+    public BurnFuelCommand(BurnFuelingObject burnFuelingObject) {
+        this.burnFuelingObject = burnFuelingObject;
     }
 
     @Override
     public void execute() {
-        fuelTank.setFuelAmount(fuelTank.getFuelAmount() - fuelTank.getFuelConsumptionRate());
+        burnFuelingObject.setFuelAmount(burnFuelingObject.getFuelAmount() - burnFuelingObject.getFuelConsumptionRate());
     }
 }

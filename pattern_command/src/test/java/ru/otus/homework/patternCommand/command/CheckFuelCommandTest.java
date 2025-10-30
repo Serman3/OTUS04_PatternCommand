@@ -3,31 +3,33 @@ package ru.otus.homework.patternCommand.command;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.homework.patternCommand.ex.CommandException;
-import ru.otus.homework.patternCommand.model.FuelTank;
+import ru.otus.homework.patternCommand.model.BurnFuelingObject;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CheckFuelCommandTest extends BaseTest {
 
-    private FuelTank fuelTank;
     private Command checkFuelCommand;
+    private BurnFuelingObject burnFuelingObject;
 
     @BeforeEach
     public void setUp() {
-        fuelTank = new FuelTank();
+        burnFuelingObject = mock(BurnFuelingObject.class);
     }
 
     @Test
     public void checkFuelThrowExceptionTest() {
-        fuelTank.setFuelAmount(0);
-        checkFuelCommand = new CheckFuelCommand(fuelTank);
+        when(burnFuelingObject.getFuelAmount()).thenReturn(0.0);
+        checkFuelCommand = new CheckFuelCommand(burnFuelingObject);
         assertThrows(CommandException.class, checkFuelCommand::execute);
     }
 
     @Test
     public void checkFuelNotThrowExceptionTest() {
-        fuelTank.setFuelAmount(20);
-        checkFuelCommand = new CheckFuelCommand(fuelTank);
+        when(burnFuelingObject.getFuelAmount()).thenReturn(20.0);
+        checkFuelCommand = new CheckFuelCommand(burnFuelingObject);
         assertDoesNotThrow(checkFuelCommand::execute);
     }
 }
